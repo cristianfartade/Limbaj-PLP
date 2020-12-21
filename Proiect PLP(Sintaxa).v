@@ -90,14 +90,14 @@ Notation "A %' B" := (aperc A B) (at level 40).
 
 Definition Vector := list nat.
 
+Definition add_first (vect : Vector) (valoare : nat): Vector := valoare :: vect. 
+Notation "Add( V , Val )" := (add_first V Val) (at level 50). 
+
 Definition length (vect : Vector) : nat := List.length vect.
 Notation "Size( V )" := (length V) (at level 50).
 
 Definition last_el (vect : Vector) := List.last vect.
 Notation "Last( V )" := (last_el V ) (at level 50). 
-
-Definition add_first (vect : Vector) (valoare : nat): Vector := valoare :: vect. 
-Notation "Add( V , Val )" := (add_first V Val) (at level 50). 
 
 Definition remove_ls (vect : Vector) : Vector := List.removelast vect.
 Notation "RemoveLast( V )" := (remove_ls V) (at level 50).
@@ -132,11 +132,15 @@ Inductive BoolExp :=
 | bxor   : BoolExp -> BoolExp -> BoolExp
 | bor    : BoolExp -> BoolExp -> BoolExp.
 
-Notation "A >' B" := (bgt A B)(at level 61).
-Notation "A >=' B" := (bge A B)(at level 61).
-Notation "A ==' B" := (beq A B)(at level 59).
+Notation "A >' B" := (bgt A B)(at level 60).
+Notation "A >=' B" := (bge A B)(at level 60).
+Notation "A ==' B" := (beq A B)(at level 60).
 Notation "A <' B" := (blt A B)(at level 60).
 Notation "A <=' B" := (ble A B)(at level 60).
+Notation "! A" := (bnot A)(at level 60).
+Notation "A &' B" := (band A B)(at level 60).
+Notation "A |' B" := (bor A B)(at level 60).
+Notation "A ^' B" := (bxor A B)(at level 60).
 
 
 (*StringExp*)
@@ -153,7 +157,7 @@ Notation "strcompare( Str1 , Str2 )" := (str_comp Str1 Str2) (at level 70).
 Notation "strconcat( Str1 , Str2 )" := (str_concat Str1 Str2) (at level 50). 
 Notation "strlength( Str1 )" := (str_len Str1) (at level 50). 
 
-Compute strcompare("abcd" , "abcd").
+Check strcompare("abcd" , "abcd").
 
 
 (*Stmt*)
