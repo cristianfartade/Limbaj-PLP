@@ -159,22 +159,24 @@ Compute strcompare("abcd" , "abcd").
 (*Stmt*)
 
 Inductive Stmt :=
+(*Declarari si assignments*)
 | Nat_decl : Var -> Stmt
 | Bool_decl : Var -> Stmt
 | String_decl : Var -> Stmt
 | Vector_decl : Vector -> Stmt
-| assignment : Var -> ArithExp -> Stmt
+| nat_assignment : Var -> ArithExp -> Stmt
 | string_assignment : Var -> StringExp -> Stmt
 | bool_assignment : Var -> BoolExp -> Stmt
 | sequence : Stmt -> Stmt -> Stmt
-
 (*Structura implementata la nivel de Stmt - notatie*)
 | struct : Var -> Stmt -> Stmt
-
 (*Switch*)
 | case : ArithExp -> Stmt -> Stmt
 | switch : ArithExp -> Stmt -> Stmt
-
+(*I/O*)
+| print : string -> Stmt
+| scan : Var -> string -> Stmt
+(*Instructiuni repetitive si conditionale*)
 | ifthen : BoolExp -> Stmt ->Stmt
 | ifthenelse : BoolExp -> Stmt -> Stmt -> Stmt 
 | while : BoolExp -> Stmt -> Stmt
@@ -203,10 +205,12 @@ Notation "-bool- V" := (Bool_decl V) (at level 70).
 Notation "-string- V" := (String_decl V) (at level 70).
 Notation "-vector- V" := (Vector_decl V) (at level 70).
 Notation "'struct' ( NUME ){ S }" := (struct NUME S) (at level 40).
-Notation "X ::= A" := (assignment X A) (at level 80).
+Notation "X ::= A" := (nat_assignment X A) (at level 80).
 Notation "[ X ] ::= A" := (bool_assignment X A) (at level 80).
 Notation "copy_string( X , A )" := (string_assignment X A) (at level 80).
 Notation "S1 ;; S2" := (sequence S1 S2) (at level 90).
+Notation " 'print' \\ S " := (print S) (at level 70).
+Notation " 'scan' \\ V \\ S  " := (scan V S) (at level 70).
 Notation " 'case' ( A )  S  " := (case A S)  (at level 90).
 Notation "'switch' ( A ) { S } " := (switch A S)  (at level 90).
 Notation " % Call 'begin_' S R 'end_' % " := (func Call S R)(at level 97).
@@ -227,6 +231,8 @@ Check  % -nat- "func" ([ 2 ])
        
         
 Check -string- "sir".
+Check print \\ "sir afisat".
+Check scan \\ "variabila" \\ "sir citit".
 Check [ "bool_v" ] ::= bfalse.
 Check copy_string( "sir" , "ana are mere").
 Check "n" ::= 10.
